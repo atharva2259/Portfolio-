@@ -243,7 +243,7 @@
 
 <!-- NAV -->
 <nav id="navbar">
-  <div class="nav-logo">// <span>atharva</span>.dev</div>
+  <div class="nav-logo">// <span>atharva</span>.codes</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -406,12 +406,12 @@
     </div>
     <div class="contact-form reveal rd2">
       <div class="form-row">
-        <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Smith"></div>
-        <div class="form-group"><label>Email</label><input type="email" placeholder="jane@company.com"></div>
+        <div class="form-group"><label>Your Name</label><input id="f-name" type="text" placeholder="Jane Smith"></div>
+        <div class="form-group"><label>Email</label><input id="f-email" type="email" placeholder="jane@company.com"></div>
       </div>
       <div class="form-group">
         <label>Service Needed</label>
-        <select>
+        <select id="f-service">
           <option value="">Select a service…</option>
           <option>AI / ML Model Development</option>
           <option>Web Development (HTML/CSS/JS)</option>
@@ -424,7 +424,7 @@
       </div>
       <div class="form-group">
         <label>Budget Range</label>
-        <select>
+        <select id="f-budget">
           <option value="">Select a range…</option>
           <option>₹500 – ₹2,000</option>
           <option>₹2,000 – ₹8,000</option>
@@ -433,7 +433,7 @@
           <option>Open to discuss</option>
         </select>
       </div>
-      <div class="form-group"><label>Project Details</label><textarea rows="5" placeholder="Tell me about your idea, timeline, and any specific requirements…"></textarea></div>
+      <div class="form-group"><label>Project Details</label><textarea id="f-message" rows="5" placeholder="Tell me about your idea, timeline, and any specific requirements…"></textarea></div>
       <button class="submit-btn" onclick="handleSubmit(this)">Send Message →</button>
     </div>
   </div>
@@ -516,18 +516,18 @@ const CONFIG = {
     { org:"🔵", title:"Python Essentials 2",                            issuer:"Cisco",      date:"Dec 2025",                    credentialLink:"https://www.credly.com/badges/a3625710-7543-480d-bbd2-4bd4c2d4026b/public_url" },
     { org:"🟣", title:"AI & Machine Learning",                          issuer:"IBM Watson", date:"2025",                        credentialLink:"https://drive.google.com/file/d/1HUJNJ6YJM8XDr-XBUYsZ9np6F65es9ew/view" },
     { org:"🔵", title:"Google AI Essentials",                           issuer:"Google",     date:"2025",                        credentialLink:"https://www.credly.com/badges/8c8bf187-5f92-4104-b4db-4c0fa6d222fa/public_url" },
-    { org:"🔴", title:"Oracle Cloud Infrastructure Foundations",        issuer:"Oracle",     date:"2025",                        credentialLink:"" },
+    { org:"🔷", title:"Microsoft Generative AI Foundation",             issuer:"Microsoft",  date:"2025",                        credentialLink:"https://drive.google.com/file/d/1HUJNJ6YJM8XDr-XBUYsZ9np6F65es9ew/view" },
   ],
 
   awards: [
-    { icon:"🥇", title:"CM Yuva Innovation Challenge Finalist",      desc:"Top 10 statewide — Govt. of Uttar Pradesh & IIT Kanpur. Solo entrepreneur competing among thousands of applicants." },
-    { icon:"🏆", title:"Startup Showdown 1st Rank",                  desc:"Secured 1st place presenting a scalable business model at ACATHLON Inter-School Fest — Shark Tank format." },
-    { icon:"🎙️", title:"Best Orator — English (Class XI)",           desc:"Recognised as Best Orator for exceptional English articulation and persuasive delivery among senior peers." },
-    { icon:"🎙️", title:"Best Orator — Hindi (Class IX)",             desc:"Awarded Best Orator Trophy for outstanding Hindi public speaking in the senior section." },
-    { icon:"✍️", title:"Best Essay Writer — District Level (1st)",   desc:"1st place in district-level Hindi essay writing competition by Rashtriya Bhasha Pratishthapan Parishad." },
-    { icon:"🎖️", title:"Letter of Appreciation — Defence Minister", desc:"National recognition from India's Defence Minister for outstanding academic performance." },
-    { icon:"🥉", title:"Audio Master — TECHVISTA 3rd Place",         desc:"Led team as Audio Expert at inter-school tech fest, clinching 3rd place in JAM Instant Public Speaking." },
-    { icon:"🌊", title:"International Seagulls Project — 1st Place", desc:"Managed team operations and co-ordinated delivery, securing 1st position in the international competition." },
+    { icon:"🏆", title:"CM Yuva Innovation Challenge Finalist",            desc:"Top 10 statewide — Govt. of Uttar Pradesh & IIT Kanpur. Solo entrepreneur competing among thousands of applicants." },
+    { icon:"🏛️", title:"Finalist — Tryst IIT Delhi Materials Case Study", desc:"Selected as finalist for the Tryst IIT Delhi Materials Case Study Challenge — one of India's premier inter-college technical fests." },
+    { icon:"🌊", title:"Finalist — IIT BHU Sacred Rivers Competition",     desc:"Selected as finalist for the Sacred Rivers Competition hosted by IIT BHU, competing among top student innovators." },
+    { icon:"🥇", title:"Startup Showdown 1st Rank",                        desc:"Secured 1st place presenting a scalable business model at ACATHLON Inter-School Fest — Shark Tank format." },
+    { icon:"🌐", title:"International Seagulls Project — 1st Place",       desc:"Managed team operations and co-ordinated delivery, securing 1st position in the international competition." },
+    { icon:"🎖️", title:"Letter of Appreciation — Defence Minister",       desc:"National recognition from India's Defence Minister for outstanding academic performance." },
+    { icon:"✍️", title:"Best Essay Writer — District Level (1st)",         desc:"1st place in district-level Hindi essay writing competition by Rashtriya Bhasha Pratishthapan Parishad." },
+    { icon:"🎙️", title:"Best Orator in School — Hindi & English",         desc:"Recognised as Best Orator for both Hindi and English across multiple school-level events and competitions." },
   ],
 
   services: [
@@ -684,12 +684,66 @@ window.addEventListener('scroll',()=>{
   document.getElementById('navbar').style.padding=window.scrollY>60?'1rem 4rem':'1.4rem 4rem';
 });
 
-/* FORM */
+/* ── EMAILJS INIT ── */
+(function(){
+  var s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+  s.onload=function(){ emailjs.init({ publicKey:'Hsj5GBv8tZgVEnOTT' }); };
+  document.head.appendChild(s);
+})();
+
+/* ── FORM SUBMIT ── */
 function handleSubmit(btn){
-  btn.textContent='✓ Sent! I\'ll be in touch.';
-  btn.style.background='var(--accent)';
+  const name    = document.getElementById('f-name').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const service = document.getElementById('f-service').value;
+  const budget  = document.getElementById('f-budget').value;
+  const message = document.getElementById('f-message').value.trim();
+
+  if(!name || !email || !message){
+    btn.textContent='⚠ Fill name, email & details';
+    btn.style.background='var(--accent3)';
+    setTimeout(()=>{ btn.textContent='Send Message →'; btn.style.background=''; },2500);
+    return;
+  }
+
+  btn.textContent='Sending…';
   btn.disabled=true;
-  setTimeout(()=>{btn.textContent='Send Message →';btn.disabled=false;},3500);
+  btn.style.opacity='0.75';
+
+  emailjs.send('service_fwsxxj4','template_mfqzhs1',{
+    from_name:    name,
+    from_email:   email,
+    service_type: service  || 'Not specified',
+    budget_range: budget   || 'Not specified',
+    message:      message,
+    reply_to:     email,
+    subject:      'Freelance Client'
+  })
+  .then(function(){
+    btn.textContent='✓ Message Sent!';
+    btn.style.background='var(--accent)';
+    btn.style.color='var(--bg)';
+    btn.style.opacity='1';
+    document.getElementById('f-name').value    ='';
+    document.getElementById('f-email').value   ='';
+    document.getElementById('f-service').value ='';
+    document.getElementById('f-budget').value  ='';
+    document.getElementById('f-message').value ='';
+    setTimeout(()=>{
+      btn.textContent='Send Message →';
+      btn.style.background='';
+      btn.style.color='';
+      btn.disabled=false;
+    },4000);
+  }, function(err){
+    console.error('EmailJS error:',err);
+    btn.textContent='✗ Failed — Try Again';
+    btn.style.background='var(--accent3)';
+    btn.style.opacity='1';
+    btn.disabled=false;
+    setTimeout(()=>{ btn.textContent='Send Message →'; btn.style.background=''; },3000);
+  });
 }
 </script>
 </body>
